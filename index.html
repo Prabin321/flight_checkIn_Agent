@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flight Check-in Agent</title>
+  <link rel="stylesheet" href="src/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="header-logo">
+        <i class="ti ti-plane-departure"></i>
+        <span>Flight Check-in Agent</span>
+      </div>
+      <span class="header-badge">AI Powered</span>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <div class="tab-row">
+      <button class="tab active" onclick="sw('setup')" id="tb-setup">
+        <i class="ti ti-plane"></i> Flight
+      </button>
+      <button class="tab" onclick="sw('watch')" id="tb-watch">
+        <i class="ti ti-clock"></i> Watch
+      </button>
+      <button class="tab" onclick="sw('notify')" id="tb-notify">
+        <i class="ti ti-bell"></i> Alerts
+      </button>
+      <button class="tab" onclick="sw('chat')" id="tb-chat">
+        <i class="ti ti-robot"></i> Ask AI
+      </button>
+    </div>
+
+    <!-- FLIGHT SETUP -->
+    <section id="pn-setup" class="pane">
+      <div class="card">
+        <div class="card-hdr">
+          <i class="ti ti-plane"></i>
+          <h2>Enter your flight details</h2>
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for="airline">Airline</label>
+            <select id="airline">
+              <option value="">Select airline…</option>
+              <option value="American Airlines|https://www.aa.com/checkin|24|https://www.aa.com/checkin?confirmationNumber={PNR}&lastName={LAST}">American Airlines</option>
+              <option value="Delta Air Lines|https://www.delta.com/us/en/check-in/overview|24|https://www.delta.com/us/en/check-in/overview?confirmationNumber={PNR}&lastName={LAST}">Delta Air Lines</option>
+              <option value="United Airlines|https://www.united.com/ual/en/us/flight-search/book-a-flight/checkin.html|24|https://www.united.com/ual/en/us/flight-search/book-a-flight/checkin.html?PNR={PNR}&lastName={LAST}">United Airlines</option>
+              <option value="Southwest Airlines|https://www.southwest.com/air/check-in/|24|https://www.southwest.com/air/check-in/?confirmationNumber={PNR}&lastName={LAST}">Southwest Airlines</option>
+              <option value="Alaska Airlines|https://www.alaskaair.com/web/check-in|24|https://www.alaskaair.com/web/check-in">Alaska Airlines</option>
+              <option value="JetBlue|https://www.jetblue.com/trueblue/check-in|24|https://www.jetblue.com/trueblue/check-in">JetBlue</option>
+              <option value="Spirit Airlines|https://www.spirit.com/CheckIn|24|https://www.spirit.com/CheckIn">Spirit Airlines</option>
+              <option value="Frontier Airlines|https://www.flyfrontier.com/travel/my-trip/check-in/|24|https://www.flyfrontier.com/travel/my-trip/check-in/">Frontier Airlines</option>
+              <option value="British Airways|https://www.britishairways.com/travel/olcilandingpageauthreq/public/en_gb|24|https://www.britishairways.com/travel/olcilandingpageauthreq/public/en_gb">British Airways</option>
+              <option value="Emirates|https://www.emirates.com/us/english/manage-booking/check-in/|48|https://www.emirates.com/us/english/manage-booking/check-in/">Emirates</option>
+              <option value="Lufthansa|https://www.lufthansa.com/us/en/online-check-in|23|https://www.lufthansa.com/us/en/online-check-in">Lufthansa</option>
+              <option value="Air France|https://www.airfrance.com/en/information/checkin/online-check-in|30|https://www.airfrance.com/en/information/checkin/online-check-in">Air France</option>
+              <option value="Singapore Airlines|https://www.singaporeair.com/en_UK/us/manage-booking/check-in/|48|https://www.singaporeair.com/en_UK/us/manage-booking/check-in/">Singapore Airlines</option>
+              <option value="Qatar Airways|https://www.qatarairways.com/en-us/checkin.html|24|https://www.qatarairways.com/en-us/checkin.html">Qatar Airways</option>
+              <option value="Turkish Airlines|https://www.turkishairlines.com/en-us/flights/manage-booking/check-in/|24|https://www.turkishairlines.com/en-us/flights/manage-booking/check-in/">Turkish Airlines</option>
+              <option value="KLM|https://www.klm.com/us/en/manage-booking/check-in|24|https://www.klm.com/us/en/manage-booking/check-in">KLM</option>
+              <option value="Ryanair|https://www.ryanair.com/gb/en/check-in|24|https://www.ryanair.com/gb/en/check-in">Ryanair</option>
+              <option value="EasyJet|https://www.easyjet.com/en/check-in|24|https://www.easyjet.com/en/check-in">EasyJet</option>
+              <option value="IndiGo|https://www.goindigo.in/check-in.html|48|https://www.goindigo.in/check-in.html">IndiGo</option>
+              <option value="Air India|https://www.airindia.com/check-in.htm|48|https://www.airindia.com/check-in.htm">Air India</option>
+              <option value="Other|https://www.google.com/search?q=online+check+in|24|https://www.google.com/search?q=online+check+in">Other airline…</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="flightNum">Flight number</label>
+            <input type="text" id="flightNum" placeholder="e.g. AA 1234" />
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for="depDate">Departure date</label>
+            <input type="date" id="depDate" />
+          </div>
+          <div class="field">
+            <label for="depTime">Departure time</label>
+            <input type="time" id="depTime" />
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for="lastName">Last name (as on ticket)</label>
+            <input type="text" id="lastName" placeholder="e.g. Smith" />
+          </div>
+          <div class="field">
+            <label for="pnr">Booking reference (PNR)</label>
+            <input type="text" id="pnr" placeholder="e.g. XYZABC" style="text-transform:uppercase" />
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for="fromCity">From</label>
+            <input type="text" id="fromCity" placeholder="e.g. JFK" />
+          </div>
+          <div class="field">
+            <label for="toCity">To</label>
+            <input type="text" id="toCity" placeholder="e.g. LAX" />
+          </div>
+        </div>
+        <button class="btn btn-full btn-primary" onclick="saveFlight()">
+          <i class="ti ti-rocket"></i> Arm the auto check-in agent
+        </button>
+      </div>
+    </section>
+
+    <!-- WATCH -->
+    <section id="pn-watch" class="pane hidden">
+      <div id="no-flight" class="card card-empty">
+        <i class="ti ti-plane" style="font-size:2rem;color:#aaa"></i>
+        <p>No flight armed yet. Go to the <strong>Flight</strong> tab first.</p>
+      </div>
+      <div id="watch-content" class="hidden">
+        <div class="big-countdown">
+          <div class="agent-status">
+            <span class="badge badge-warning pulse-badge" id="agent-badge">
+              <span class="dot pulse"></span> Agent watching
+            </span>
+          </div>
+          <div class="cd-num" id="cd-display">--:--:--</div>
+          <div class="cd-lbl" id="cd-label">calculating…</div>
+        </div>
+
+        <div id="launch-zone" class="hidden">
+          <div class="alert alert-success">
+            <i class="ti ti-check"></i>
+            <strong>Check-in is OPEN!</strong> The agent detected your window. Click below — your booking details are pre-filled.
+          </div>
+          <button class="btn btn-full btn-launch" id="launch-btn" onclick="launchCheckin()">
+            <i class="ti ti-external-link"></i> Launch check-in now
+          </button>
+          <p class="hint">PNR and last name are pre-filled in the URL where supported.</p>
+        </div>
+
+        <div id="waiting-zone">
+          <div class="alert alert-info">
+            <i class="ti ti-info-circle"></i>
+            Keep this tab open — the agent will alarm and show the launch button the moment check-in opens.
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-hdr"><i class="ti ti-timeline"></i><h2>Timeline</h2></div>
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-dot done" id="tl1"></div>
+              <div class="tl-line"></div>
+              <div><div class="tl-title">Flight saved</div><div class="tl-sub" id="tl1-sub">—</div></div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot" id="tl2"></div>
+              <div class="tl-line"></div>
+              <div><div class="tl-title">Check-in opens</div><div class="tl-sub" id="tl2-sub">—</div></div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot" id="tl3"></div>
+              <div class="tl-line"></div>
+              <div><div class="tl-title">Departure</div><div class="tl-sub" id="tl3-sub">—</div></div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot" id="tl4"></div>
+              <div><div class="tl-title">Check-in closes (typically 1h before)</div><div class="tl-sub" id="tl4-sub">—</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-hdr"><i class="ti ti-info-circle"></i><h2>Flight summary</h2><span id="sum-badge" class="badge badge-info" style="margin-left:auto">—</span></div>
+          <div class="row"><span class="rl"><i class="ti ti-plane-departure"></i>Flight</span><span class="rv" id="s-flight">—</span></div>
+          <div class="row"><span class="rl"><i class="ti ti-route"></i>Route</span><span class="rv" id="s-route">—</span></div>
+          <div class="row"><span class="rl"><i class="ti ti-calendar"></i>Departs</span><span class="rv" id="s-dep">—</span></div>
+          <div class="row"><span class="rl"><i class="ti ti-clock"></i>Check-in opens</span><span class="rv" id="s-open">—</span></div>
+          <div class="row"><span class="rl"><i class="ti ti-id"></i>PNR</span><span class="rv" id="s-pnr">—</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ALERTS -->
+    <section id="pn-notify" class="pane hidden">
+      <div class="card">
+        <div class="card-hdr"><i class="ti ti-bell"></i><h2>Alert settings</h2></div>
+        <div class="notif-row">
+          <div><div class="notif-label">Browser notification</div><div class="notif-sub">Pop-up when check-in opens</div></div>
+          <label class="toggle"><input type="checkbox" id="tog-browser" checked onchange="toggleBrowser(this)"><span class="slider-t"></span></label>
+        </div>
+        <div class="divider"></div>
+        <div class="notif-row">
+          <div><div class="notif-label">Alarm sound</div><div class="notif-sub">Plays a chime when check-in opens</div></div>
+          <label class="toggle"><input type="checkbox" id="tog-sound" checked><span class="slider-t"></span></label>
+        </div>
+        <div class="divider"></div>
+        <div class="notif-row">
+          <div><div class="notif-label">Early warning (30 min before)</div><div class="notif-sub">Heads-up 30 minutes early</div></div>
+          <label class="toggle"><input type="checkbox" id="tog-early" checked><span class="slider-t"></span></label>
+        </div>
+        <div class="divider"></div>
+        <div class="notif-row">
+          <div><div class="notif-label">Tab title flash</div><div class="notif-sub">Tab flashes "CHECK IN NOW" repeatedly</div></div>
+          <label class="toggle"><input type="checkbox" id="tog-title" checked><span class="slider-t"></span></label>
+        </div>
+        <button class="btn btn-full" onclick="testAlarm()" style="margin-top:1rem"><i class="ti ti-volume"></i> Test alarm</button>
+        <button class="btn btn-full" onclick="reqNotifPermission()" style="margin-top:8px"><i class="ti ti-bell"></i> Grant notification permission</button>
+        <div id="notif-status" class="hint" style="text-align:center;margin-top:8px"></div>
+      </div>
+      <div class="alert alert-warning">
+        <i class="ti ti-alert-triangle"></i>
+        Keep this browser tab open for the agent to watch. If you close it, set a phone alarm as backup.
+      </div>
+    </section>
+
+    <!-- AI CHAT -->
+    <section id="pn-chat" class="pane hidden">
+      <div class="card">
+        <div class="card-hdr">
+          <i class="ti ti-robot"></i><h2>AI flight assistant</h2>
+          <span class="badge badge-success" style="margin-left:auto"><span class="dot" style="background:#1D9E75"></span> Live</span>
+        </div>
+        <div id="chat-msgs" class="chat-msgs">
+          <div class="chat-msg">Hi! Ask me anything about your flight — baggage rules, documents, seat tips, delays, or check-in help.</div>
+        </div>
+        <div class="chat-row">
+          <input type="text" id="chat-in" placeholder="Ask anything about your flight…" onkeydown="if(event.key==='Enter')sendChat()" />
+          <button onclick="sendChat()">Send</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    Built with the Anthropic Claude API &nbsp;·&nbsp;
+    <a href="https://github.com" target="_blank">View on GitHub</a>
+  </footer>
+
+  <script src="src/airlines.js"></script>
+  <script src="src/agent.js"></script>
+</body>
+</html>
